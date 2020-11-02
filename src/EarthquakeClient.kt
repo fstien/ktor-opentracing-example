@@ -28,14 +28,14 @@ class EarthquakeClient {
 
         val call: HttpStatement = client.get("https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=$date")
 
-        val earthQuakeResponse: EarthQuakeResponse = call.execute {
+        val earthquakeResponse: EarthquakeResponse = call.execute {
             when(it.status) {
                 HttpStatusCode.OK -> it.receive()
                 else -> throw Exception("Error response received from earquakes.usgs ${it.status}")
             }
         }
 
-        val earthquakes = earthQuakeResponse.features.map { it.properties.toEarthQuake() }
+        val earthquakes = earthquakeResponse.features.map { it.properties.toEarthQuake() }
 
         setTag("count", earthquakes.size)
 
@@ -78,24 +78,24 @@ data class Earthquake(
     val timeGMT: String
 )
 
-fun EarthQuakeProperties.toEarthQuake(): Earthquake = Earthquake(
+fun EarthquakeProperties.toEarthQuake(): Earthquake = Earthquake(
     location = this.place,
     magnitude = this.mag,
     timeGMT = SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date(time))
 )
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class EarthQuakeResponse(
+data class EarthquakeResponse(
     val features: List<EarthQuakeFeature>
 )
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class EarthQuakeFeature(
-    val properties: EarthQuakeProperties
+    val properties: EarthquakeProperties
 )
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class EarthQuakeProperties(
+data class EarthquakeProperties(
     val mag: Double,
     val place: String,
     val time: Long
