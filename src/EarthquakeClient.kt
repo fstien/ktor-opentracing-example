@@ -2,6 +2,7 @@ package com.github.fstien
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.zopa.ktor.opentracing.OpenTracingClient
+import com.zopa.ktor.opentracing.span
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.apache.*
@@ -22,7 +23,7 @@ class EarthquakeClient {
         install(OpenTracingClient)
     }
 
-    private suspend fun getAll(): List<Earthquake> {
+    private suspend fun getAll(): List<Earthquake> = span("EarthquakeClient.getAll()") {
         val date = LocalDateTime.now().toLocalDate()
 
         val call: HttpStatement = client.get("https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=$date")
@@ -36,25 +37,37 @@ class EarthquakeClient {
 
         val earthquakes = earthQuakeResponse.features.map { it.properties.toEarthQuake() }
 
+        setTag("count", earthquakes.size)
+
         return earthquakes
     }
 
-    suspend fun getLatest(): Earthquake {
+    suspend fun getLatest(): Earthquake = span("EarthquakeClient.getLatest()") {
         val earthquakes = getAll()
         val latest = earthquakes.first()
+        setTag("location", latest.location)
+        setTag("magnitude", latest.magnitude)
+        setTag("timeGMT", latest.timeGMT)
 
         return latest
     }
 
-    suspend fun getBiggest(): Earthquake {
+    suspend fun getBiggest(): Earthquake = span("EarthquakeClient.getBiggest()") {
         val earthquakes = getAll()
         val biggest = earthquakes.sortedBy { it.magnitude }.last()
+        setTag("location", biggest.location)
+        setTag("magnitude", biggest.magnitude)
+        setTag("timeGMT", biggest.timeGMT)
+
         return biggest
     }
 
-    suspend fun getBiggerThan(threshold: Double): List<Earthquake> {
+    suspend fun getBiggerThan(threshold: Double): List<Earthquake> = span("EarthquakeClient.getBiggerThan()") {
+        setTag("threshold", threshold)
         val earthquakes = getAll()
         val biggerThan = earthquakes.filter { it.magnitude > threshold }
+        setTag("count", biggerThan.size)
+
         return biggerThan
     }
 }
