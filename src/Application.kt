@@ -1,6 +1,7 @@
 package com.github.fstien
 
 import com.fasterxml.jackson.databind.SerializationFeature
+import com.zopa.ktor.opentracing.OpenTracingServer
 import com.zopa.ktor.opentracing.ThreadContextElementScopeManager
 import io.jaegertracing.Configuration
 import io.jaegertracing.internal.samplers.ConstSampler
@@ -32,6 +33,8 @@ fun Application.module(testing: Boolean = false) {
         .build()
 
     GlobalTracer.registerIfAbsent(tracer)
+
+    install(OpenTracingServer)
 
     install(ContentNegotiation) {
         jackson {
