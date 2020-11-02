@@ -1,7 +1,6 @@
 package com.github.fstien
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.zopa.ktor.opentracing.OpenTracingClient
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.apache.*
@@ -18,8 +17,6 @@ class EarthquakeClient {
         install(JsonFeature) {
             serializer = JacksonSerializer {}
         }
-
-        install(OpenTracingClient)
     }
 
     private suspend fun getAll(): List<Earthquake> {
