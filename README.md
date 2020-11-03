@@ -37,6 +37,9 @@ Retrieves data about earthquakes that happened today using an [API from the U.S.
 
     http://localhost:16686/
 
+![Trace Screenshot](tracescreenshotexample.png)
+
+
 5. Stop the Jaeger docker container.
 
         docker ps
