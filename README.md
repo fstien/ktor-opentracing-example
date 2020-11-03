@@ -26,7 +26,7 @@ Retrieves data about earthquakes that happened today using an [API from the U.S.
         
 3. Send some requests. Other routes available are `/earthquake/biggest` and `/earthquake/biggerthan/5` (where 5 is a parameter).
 
-        curl http://localhost:8080/earthquake/latest
+        curl localhost:8080/earthquake/latest
         {
           "location" : "21 km SSE of Karluk, Alaska",
           "magnitude" : 1.9,
