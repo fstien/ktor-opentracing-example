@@ -42,5 +42,5 @@ dependencies {
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson_version"
 
     implementation "io.jaegertracing:jaeger-client:1.3.2"
-    implementation 'com.zopa:ktor-opentracing:0.2.0'
+    implementation "com.github.fstien:ktor-opentracing:0.2.0"
 }
