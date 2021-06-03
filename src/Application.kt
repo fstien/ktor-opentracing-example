@@ -34,7 +34,9 @@ fun Application.module(testing: Boolean = false) {
 
     GlobalTracer.registerIfAbsent(tracer)
 
-    install(OpenTracingServer)
+    install(OpenTracingServer) {
+        addTag("threadName") { Thread.currentThread().name }
+    }
 
     install(ContentNegotiation) {
         jackson {

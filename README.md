@@ -50,7 +50,7 @@ Retrieves data about earthquakes that happened today using an [API from the U.S.
 1. Import [ktor-opentracing](https://github.com/zopaUK/ktor-opentracing) and the [Java Jaeger client](https://github.com/jaegertracing/jaeger-client-java) [(commit)](https://github.com/fstien/ktor-opentracing-example/commit/a6c43669e532683c6eef2e36c525087c882a9335).
 
         implementation "io.jaegertracing:jaeger-client:1.3.2"
-        implementation "com.zopa:ktor-opentracing:0.1.1"
+        implementation "com.zopa:ktor-opentracing:0.3.5"
 
 2. Instantiate a tracer and register it in [GlobalTracer](https://opentracing.io/guides/java/tracers/) [(commit)](https://github.com/fstien/ktor-opentracing-example/commit/998f2228289493b37f9c3e86061b31cd7d24f689).
 

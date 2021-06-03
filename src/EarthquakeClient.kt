@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.*
 
+
 class EarthquakeClient {
     val client = HttpClient(Apache) {
         install(JsonFeature) {
@@ -48,6 +49,7 @@ class EarthquakeClient {
         setTag("location", latest.location)
         setTag("magnitude", latest.magnitude)
         setTag("timeGMT", latest.timeGMT)
+
 
         return latest
     }
